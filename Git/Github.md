@@ -58,22 +58,73 @@
 ### remote repo
 - 파일이 원격 저장소 전용 서버에서 관리되며 여러 사람이 함께 공유하기 위한 저장소
 
-## github Conventional Commits
-- commit의 제목은 commit을 설명하는 하나의 구나 절로 완성
-> feat: 기능 개발 관련
+## Start Project with git clone
+### github Conventional Commits
+- `commit`의 제목은 `commit`을 설명하는 하나의 구나 절로 완성 feat: 기능 개발 관련
+
+```Markdown
 fix: 오류 개선 혹은 버그 패치
 docs: 문서화 작업
 test: test 관련
 conf: 환경설정 관련
 build: 빌드 관련
 ci: Continuous Integration 관련
+```
 
   - 예시)
->feat: Add server.py
+ ```Markdown
+ feat: Add server.py
 fix: Fix Typo server.py
 docs: Add README.md, LICENSE
 conf: Create .env, .gitignore, dockerfile
 BREAKING CHANGE: Drop Support /api/v1
 refactor: Refactor user classes
+```
 
-git flow
+### README.md
+- 프로젝트와 Repository를 설명하는 책의 표지와 같은 문서
+- 나와 동료, 이 repo의 사용자를 위한 문서
+
+### .gitignore
+- .gitignore 는 git이 파일을 추적할 때, 어떤 파일이나 폴더 등을 추적하지 않도록 명시하기
+위해 작성, 해당 문서에 작성된 리스트는 수정사항이 발생해도 git이 무시
+- 특정 파일 확장자를 무시하거나 이름에 패턴이 존재하는 경우, 또는 특정 디렉토리 아래의 모
+든 파일을 무시.
+- 사용 시 https://www.toptal.com/developers/gitignore 에서 사용하는것을 권장
+  - 사용 예시)
+  ![](https://velog.velcdn.com/images/hyeon_17/post/9af0b3ee-5146-4143-a9a0-8f254df32f54/image.png)
+    > 사용 환경이 windows, macos, vsc, react일 경우 항목들을 추가 하고 생성 버튼 클릭
+      
+   ![](https://velog.velcdn.com/images/hyeon_17/post/2d56b0b8-e14e-41ba-a27a-749d04d53ef0/image.png)
+    > 생성이 완료되면 위와 같은 항목들이 생성됨. 복사하여 .gitignore 파일에 붙여넣기
+
+
+### LICENSE
+- MIT License
+  - MIT에서 만든 라이센스로, 모든 행동에 제약이 없으며, 저작권자는 소프트웨어와
+관련한 책임에서 자유롭다.
+- Apache License 2.0
+  - Apache 재단이 만든 라이센스로, 특허권 관련 내용이 포함.
+- GNU General Public License v3.0
+  - 가장 많이 알려져있으며, 의무사항(해당 라이센스가 적용된 소스코드 사용시 GPL
+을 따라야 함)이 존재
+
+## Branch
+- 분기점을 생성하여 독립적으로 코드를 변경할 수 있도록 도와주는 모델
+
+### branching models
+- git flow
+  - (hotfix)- master -(release)- develop - feature
+  - pros: 가장 많이 적용, 각 단계가 명확히 구분
+  - cons: 복잡..
+- github flow
+  - master - feature
+  - pros: 브랜치 모델 단순화, master 의 모든 커밋은 deployable
+  - cons: CI 의존성 높음. 누구 하나라도 실수했다간..(pull request로 방지)
+- gitlab flow
+  - production - pre-production - master - feature
+  - pros: deploy, issue에 대한 대응이 가능하도록 보완
+  - cons: git flow와 반대 ( master -develop, production -master)
+
+### git flow strategy
+![](https://velog.velcdn.com/images/hyeon_17/post/de0cfdb7-4afd-4f17-aeb6-402126d85a23/image.png)
