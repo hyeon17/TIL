@@ -79,7 +79,7 @@ docs: Add README.md, LICENSE
 conf: Create .env, .gitignore, dockerfile
 BREAKING CHANGE: Drop Support /api/v1
 refactor: Refactor user classes
-```
+
 
 ### README.md
 - 프로젝트와 Repository를 설명하는 책의 표지와 같은 문서
@@ -111,7 +111,35 @@ refactor: Refactor user classes
 
 ## Branch
 - 분기점을 생성하여 독립적으로 코드를 변경할 수 있도록 도와주는 모델
-
+- 브랜치 옵션
+  > checkout: 브랜치 전환 또는 작업 트리 파일 복원
+switch: 브랜치 전환
+restore: 작업 트리 파일 복원
+### Branch 사용법 및 설명
+- 사용 가능한 로컬 브랜치 표시
+  - `$ git branch`
+- 사용 가능한 원격 브랜치 표시
+  - `$ git branch -r`
+- 사용 가능한 모든 브랜치 표시
+  - `$ git branch -a`
+- stem이라는 이름을 가진 브랜치 만들기
+  - `$ git branch stem`
+- stem브랜치 전환
+  - `$ git switch stem`
+- new-stem브랜치 생성과 체크아웃
+  -`$ git checkout -b new-stem`
+- readme.md 내부에서 변경
+  - `$ git commit -a -m 'edit readme.md'`
+  - `$ git checkout master`
+- stem브랜치 병합
+  - `$ git merge stem`
+- 브랜치 삭제
+  - `$ git branch -D stem`
+- 지정된 원격 브랜치로 푸시
+  - `$ git push origin stem`
+- 두 브랜치의의 차이를 보기
+  - `$ git diff master stem`
+  
 ### branching models
 - git flow
   - (hotfix)- master -(release)- develop - feature
@@ -128,3 +156,68 @@ refactor: Refactor user classes
 
 ### git flow strategy
 ![](https://velog.velcdn.com/images/hyeon_17/post/de0cfdb7-4afd-4f17-aeb6-402126d85a23/image.png)
+
+### git flow 사용법
+![](https://velog.velcdn.com/images/hyeon_17/post/bb86e5dd-6c76-4b52-a295-72c86f0a05d2/image.png)
+
+#### Main Branches  
+1.Master 
+- 제품으로 출시될 수 있는 브랜치 (main) 
+- master의 최신버전은 언제나 실행가능해야함 
+
+2.Develope
+- 실행가능한 상태를 만들어가는 과정
+- 다음 출시 버전을 개발하는 브랜치
+
+#### Temporary Branches
+- merge 된 후 사라지는 임시 브랜치
+
+3.feature 
+- 기능 개발하는 브랜치 
+- feature/기능명 으로 생성하고 사용 후 삭제 
+
+4.Release 
+- 이번 출시 버전을 준비하는 브랜치 
+- release/버전명 으로 생성하고 사용 후 삭제 
+- QA, TEST etc.. 
+
+5.Hotfixes
+- 출시한 버전에 긴급하게 수정해서 다시 업데이트 해야할 때 
+- hotfixes/차기 버전명 으로 생성하고 사용 후 삭제 
+- bugfix 
+
+> git-flow 개발 프로세스  예시
+1.개발자는 develop branch로부터 본인이 개발할 기능을 위한 feature branch 생성
+2.feature branch에서 기능을 만들다가 기능 완성후에 develop branch에 merge
+3.이번 배포 버전의 기능들이 develop branch에 모두 merge 되었다면 QA, TEST를 위해 release 브랜치 생성 
+4.release branch에서 오류가 발생한다면 release 브랜치 내에서 수정 , QA 가 끝났다면 해당 버전을 배포하기 위해 master branch로 merge한다. bugfix가 있었다면 해당 내용을 반영하기 위해 develop branch에도 merge
+5.만약 제품 (master)에서 버그가 발생한다면 hotfix branch 생성
+6.hotfix branch에서 bugfix 끝나면 develop과 master branch에 각각 merge 
+
+#### 개발 프로세스
+- git flow 초기화를 진행하면 develop 브랜치가 생성되고 전환됨
+  - `$ git flow init`
+- feature/flow-test 브랜치가 생성
+  - 기능 하나를 개발할때마다 feature브랜치를 열고 닫아야 함
+  - `$ git flow feature start flow-test`
+- feature/flow-test 브랜치가 종료
+  - 종료된 즉시 feature/flow-test브랜치는 자동 삭제됨
+  - `$ git flow feature finish flow-test`
+- team 저장소에서 코드를 가져올때
+  - `$ git remote add <저장소 이름> <저장소 주소>`
+  
+git pull = git fetch + git merge
+pull과 fetch의 차이점은 병합을 하냐 안 하냐의 차이
+
+1. git pull
+원격저장소에 있는 프로젝트의 변경사항을 그대로 로컬저장소에 옮겨와 자동으로 병합
+변경 사항을 가져옴과 동시에 자동으로 병합이 되기 때문에 무엇이 추가되고 병합되었는지 확인이 안 됨
+
+2. git fetch
+다른 사람이 수정한 부분을 확인하고 병합할 수 있다는 장점
+
+
+
+
+## Revert
+### Rename
