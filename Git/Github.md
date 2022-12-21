@@ -79,6 +79,7 @@ docs: Add README.md, LICENSE
 conf: Create .env, .gitignore, dockerfile
 BREAKING CHANGE: Drop Support /api/v1
 refactor: Refactor user classes
+```
 
 
 ### README.md
