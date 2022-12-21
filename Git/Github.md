@@ -71,7 +71,7 @@ build: 빌드 관련
 ci: Continuous Integration 관련
 ```
 
-  - 예시)
+- 예시)
  ```Markdown
  feat: Add server.py
 fix: Fix Typo server.py
@@ -80,7 +80,6 @@ conf: Create .env, .gitignore, dockerfile
 BREAKING CHANGE: Drop Support /api/v1
 refactor: Refactor user classes
 ```
-
 
 ### README.md
 - 프로젝트와 Repository를 설명하는 책의 표지와 같은 문서
@@ -187,13 +186,13 @@ restore: 작업 트리 파일 복원
 - hotfixes/차기 버전명 으로 생성하고 사용 후 삭제 
 - bugfix 
 
-> git-flow 개발 프로세스  예시
-1.개발자는 develop branch로부터 본인이 개발할 기능을 위한 feature branch 생성
-2.feature branch에서 기능을 만들다가 기능 완성후에 develop branch에 merge
-3.이번 배포 버전의 기능들이 develop branch에 모두 merge 되었다면 QA, TEST를 위해 release 브랜치 생성 
-4.release branch에서 오류가 발생한다면 release 브랜치 내에서 수정 , QA 가 끝났다면 해당 버전을 배포하기 위해 master branch로 merge한다. bugfix가 있었다면 해당 내용을 반영하기 위해 develop branch에도 merge
-5.만약 제품 (master)에서 버그가 발생한다면 hotfix branch 생성
-6.hotfix branch에서 bugfix 끝나면 develop과 master branch에 각각 merge 
+> git-flow 개발 프로세스  예시  
+1.개발자는 develop branch로부터 본인이 개발할 기능을 위한 feature branch 생성  
+2.feature branch에서 기능을 만들다가 기능 완성후에 develop branch에 merge  
+3.이번 배포 버전의 기능들이 develop branch에 모두 merge 되었다면 QA, TEST를 위해 release   브랜치 생성 
+4.release branch에서 오류가 발생한다면 release 브랜치 내에서 수정 , QA 가 끝났다면 해당 버전을 배포하기 위해 master branch로 merge한다. bugfix가 있었다면 해당 내용을 반영하기 위해 develop branch에도 merge  
+5.만약 제품 (master)에서 버그가 발생한다면 hotfix branch 생성  
+6.hotfix branch에서 bugfix 끝나면 develop과 master branch에 각각 merge   
 
 #### 개발 프로세스
 - git flow 초기화를 진행하면 develop 브랜치가 생성되고 전환됨
@@ -204,21 +203,58 @@ restore: 작업 트리 파일 복원
 - feature/flow-test 브랜치가 종료
   - 종료된 즉시 feature/flow-test브랜치는 자동 삭제됨
   - `$ git flow feature finish flow-test`
-- team 저장소에서 코드를 가져올때
+- 저장소 추가
   - `$ git remote add <저장소 이름> <저장소 주소>`
-  
-git pull = git fetch + git merge
+- team 저장소에서 코드를 가져올때
+  - `$ git fetch <team remote이름>`
+  - `$ git merge <team remote 이름>`
+ 
+> git pull = git fetch + git merge
 pull과 fetch의 차이점은 병합을 하냐 안 하냐의 차이
-
-1. git pull
+- git pull
 원격저장소에 있는 프로젝트의 변경사항을 그대로 로컬저장소에 옮겨와 자동으로 병합
 변경 사항을 가져옴과 동시에 자동으로 병합이 되기 때문에 무엇이 추가되고 병합되었는지 확인이 안 됨
-
-2. git fetch
+- git fetch
 다른 사람이 수정한 부분을 확인하고 병합할 수 있다는 장점
 
 
 
 
 ## Revert
+revert와 reset의 차이
+![](https://velog.velcdn.com/images/hyeon_17/post/d30e4fde-2709-4db9-9948-8be285e5c1cd/image.png)
+
 ### Rename
+- `$ git mv server.py main.py` -> renamed
+  - 파일의 history를 남기기 위해서는 삭제 후 생성이 아닌 이름바꾸기로 추적
+  
+### Undoing
+`$ git checkout -- . or $ git checkout -- {filename}`
+### Unstaging
+`$ git reset HEAD {filename}`
+### Unstaging and Remove
+`$ git rm -f {filename}`
+### Edit latest commit
+`$ git commit --amend`
+### Edit prior commit
+`$ git rebase -i <commit>`
+### abort rebase
+`$ git rebase --abort`
+### Complete rebase
+`$ git rebase --continue`
+### Reset Commit
+ex) 현재 HEAD에서 직전의 3개의 commit을 순서대로 거슬러 올라가 해당 내역에 대해 commit, push 수행
+
+```Markdown
+$ git revert --no-commit HEAD~3..
+$ git commit
+$ git push origin <branch>
+```
+
+- 잘못하기 전 과거로 돌아가 최신을 유지하면서 되돌렸다는 이력을 commit으로 남겨 모
+든 팀원이 이 사항을 공유하고 중지시킬 수 있음.
+- commit을 따로 안할땐 `--no-edit`
+- merge commit을 되돌릴 땐 `-m ( $git revert -m {1 or 2} {merge commit id} )`
+  
+  
+  
